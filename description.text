@@ -1,0 +1,17 @@
+Template            What it does
+------------------  --------------------------------------------------
+vpc.yaml            Creates VPC and subnets; exports public/private subnet IDs
+db.yaml             Imports private subnets; deploys RDS; exports Availability Zone (AZ)
+bastionhost.yaml    Imports public subnets and RDS AZ; deploys EC2 in same AZ
+
+
+
+##  Explanation:
+vpc.yaml:
+Sets up the foundational network infrastructure, including the VPC and its public/private subnets. It exports the subnet IDs for use in other stacks.
+
+db.yaml:
+Uses the private subnets (created in vpc.yaml) to deploy an RDS instance. It also exports the AZ so other stacks (like the bastion host) can deploy into the same zone for better performance and security.
+
+bastionhost.yaml:
+Uses the public subnets and RDS AZ to deploy a bastion host EC2 instance, enabling secure access to the private RDS instance via SSH or other secure channels.
